@@ -19,5 +19,11 @@ const createGallery = () => galleryItems.forEach((item) => {
     });
     createGallery();
 
+    const lightbox = new SimpleLightbox('.gallery a', 
+    { /* options */ 
+    captionsData: "alt",
+    captionDelay: 250,
+});
+    lightbox.on('show.simplelightbox');
 
 console.log(galleryItems);

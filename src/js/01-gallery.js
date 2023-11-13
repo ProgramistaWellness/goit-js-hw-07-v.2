@@ -28,26 +28,20 @@ const gallery = document.querySelector('.gallery');
 
 const handleClick = (event) => {
     event.preventDefault();
-    const instance = basicLightbox.create(`
-    <img src= ${event.target.dataset.source} width="800" height="600">
-    `, {onShow: (instance) => {
-        // Close when hitting escape.
-        document.onkeydown = function(evt) {
-            evt = evt || window.event;
-            var isEscape = false;
-            if ( "key" in evt ) {
-                isEscape = ( evt.key === "Escape" || evt.key === "Esc" );
-            } else {
-                isEscape = ( evt.keyCode === 27 );
-            }
-            if ( isEscape ) {
-                instance.close();
-            }
-        };
+    function onEscape(event) {
+        if (event.code !== "Escape") return;
+        instance.close();
     }
-    },);
-    instance.show();
-}
+    const instance = basicLightbox.create(`
+    <img src= ${event.target.dataset.source} width="1200">
+    `, 
+    {onShow: () => window.addEventListener("keydown", onEscape),
+     onClose: () => window.removeEventListener("keydown", onEscape),
+        }, )
+        instance.show();
+    }
+    
+
 gallery.addEventListener('click', handleClick);
 
 
