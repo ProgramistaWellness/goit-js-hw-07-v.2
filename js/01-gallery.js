@@ -25,16 +25,20 @@ const createGallery = () =>
   });
 createGallery();
 
-const handleClick = (event) => {
+gallery.onclick = (event) => {
+  if (event.target.nodeName !== "IMG") {
+    return;
+  }
   event.preventDefault();
   function onEscape(event) {
     if (event.code !== "Escape") return;
     instance.close();
   }
+
   const instance = basicLightbox.create(
     `
-    <img src= ${event.target.dataset.source} width="1200">
-    `,
+		<img width="1200" src= ${event.target.dataset.source}>
+	`,
     {
       onShow: () => window.addEventListener("keydown", onEscape),
       onClose: () => window.removeEventListener("keydown", onEscape),
@@ -42,7 +46,5 @@ const handleClick = (event) => {
   );
   instance.show();
 };
-
-gallery.addEventListener("click", handleClick);
 
 console.log(galleryItems);
